@@ -1,0 +1,90 @@
+swagger: '2.0'
+info:
+  title: APIRails
+  version: '1.0'
+paths:
+  /montagens:
+    get:
+      summary: Obtém todas as montagens
+      description: Retorna uma lista de todas as montagens disponíveis.
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Montagem'
+    post:
+      summary: Cria uma nova montagem
+      description: Cria uma nova montagem com os dados fornecidos.
+      parameters:
+        - name: Montagem
+          in: body
+          description: Dados da montagem a ser criada
+          required: true
+          schema:
+            $ref: '#/definitions/Montagem'
+      responses:
+        '201':
+          description: Criado
+        '400':
+          description: Solicitação inválida
+  definitions:
+    Montagem:
+      type: object
+      properties:
+        placa_mae_id:
+          type: integer
+          format: int64
+          description: ID da placa mãe
+        processador_id:
+          type: integer
+          description: ID do processador
+        placa_de_video:
+          type: integer
+          description: ID da placa de video
+      computador_pessoal_memorias_ram_attributes:
+        type: array
+        items: 
+          properties:
+            memoria_ram_id:
+              type: integer
+              format: int64
+              description: ID da memoria ram
+         
+  /usuarios:
+      get:
+        summary: Obtém todos usuários cadastrados
+        description: Retorna uma lista de todos usuários.
+        responses:
+          '200':
+            description: OK
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/Autenticacao'
+      post:
+        summary: Cria um novo usuario
+        description: Cria um novo usuario com os dados fornecidos.
+        parameters:
+          - name: Autenticacao
+            in: body
+            description: Dados da autenticação a ser criada
+            required: true
+            schema:
+              $ref: '#/definitions/Autenticacao'
+        responses:
+          '201':
+            description: Criado
+          '400':
+            description: Solicitação inválida
+  definitions:
+    Usuario:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email do usuário
+        password:
+          type: string
+          description: Senha do usuário
