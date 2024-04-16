@@ -1,14 +1,14 @@
 class ComputadorPessoal < ApplicationRecord
   belongs_to :processador, required: true
   belongs_to :placa_mae, required: true
-  belongs_to :placa_de_video, required: false
+  belongs_to :placa_de_video
 
   has_many :computador_pessoal_memorias_ram, dependent: :destroy
   has_many :memorias_ram, through: :computador_pessoal_memorias_ram
 
   accepts_nested_attributes_for :computador_pessoal_memorias_ram
 
-  validates_presence_of :placa_de_video_id, unless: Proc.new { self.placa_mae.video_integrado?}, message: 'O Computador Pessoal precisa ter placa de video integrado. Por favor, selecione uma opção.'
+  validates_presence_of :placa_de_video_id, unless: Proc.new { self.try(:placa_mae).try(:video_integrado?)}, message: 'O Computador Pessoal precisa ter placa de video integrado. Por favor, selecione uma opção.'
 
   validate :placa_mae_compativel_com_processador?
   validate :total_memoria_superior_ao_permitido?
@@ -16,8 +16,8 @@ class ComputadorPessoal < ApplicationRecord
   validate :memoria_ram_selecionada?
 
   def placa_mae_compativel_com_processador?
-    if placa_mae.tipo_processador != 3
-      errors.add(:error, "Placa Mãe não suporta processador informado.") if placa_mae.tipo_processador != processador.marca
+    if placa_mae.try(:tipo_processador) != 3
+      errors.add(:error, "Placa Mãe não suporta processador informado.") if placa_mae.try(:tipo_processador) != processador.try(:marca)
     end
   end
 

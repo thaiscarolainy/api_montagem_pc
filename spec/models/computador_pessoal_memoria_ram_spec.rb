@@ -1,5 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe ComputadorPessoalMemoriaRam, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  describe 'associacoes' do
+    it { is_expected.to belong_to(:computador_pessoal) }
+    it { is_expected.to belong_to(:memoria_ram) }
+  end
 end

@@ -5,6 +5,8 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+Usuario.create(email: "admin@example.com", password: "123456")
+puts "Usuario Cadastrado!"
 
 # Processador marca: 1- Intel; 2 - AMD
 [
@@ -37,7 +39,7 @@ puts "Seed Memoria RAM"
 [
   'Evga Geforce RTX 2060 6GB',
   'Asus ROG Strix Geforce RTX 3060 6GB',
-  'Gigabyte Radeon RX 6600 XT EAGLE 8GB'
+  'Gigabyte Radeon RX 6600 XT EAGLE 8GB' 
 ].each do |video|
     PlacaDeVideo.find_or_create_by(descricao: video)
 end
